@@ -1,12 +1,11 @@
-package br.lucas.vaz.mspoll.domain;
+package br.lucas.vaz.msvoting.domain;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,16 +19,18 @@ import lombok.NoArgsConstructor;
 @Table(name = "votes")
 @NoArgsConstructor
 
-public class Votes {
+public class Votes implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
-  @NotEmpty
   private Long pollId;
 
   @Enumerated(EnumType.STRING)
   private SingleVote vote;
 
+  public Votes(Long pollId) {
+    this.pollId = pollId;
+  }
 }

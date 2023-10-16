@@ -1,10 +1,12 @@
-package br.lucas.vaz.mspoll.infra.repository;
+package br.lucas.vaz.msvoting.infra.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import br.lucas.vaz.msvoting.domain.Votes;
 
-import br.lucas.vaz.mspoll.domain.Votes;
-
-public interface VotesRepository extends JpaRepository<Votes, Long>, QueryByExampleExecutor<Votes> {
+public interface VotesRepository extends JpaRepository<Votes, Long> {
   @Override
-  <S extends Planet> List<S> findAll(Example<S> example);
+  <S extends Votes> List<S> findAll(Example<S> example);
 }
