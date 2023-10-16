@@ -28,4 +28,8 @@ public class PollService {
   public List<Poll> getAll() {
     return pollRepository.findAll();
   }
+
+  public void remove(Long id) {
+    pollRepository.deleteById(id);
+  }
 }
