@@ -2,6 +2,7 @@ package br.lucas.vaz.msuser.application.service;
 
 import java.util.Optional;
 
+import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
 import org.springframework.stereotype.Service;
 
 import br.lucas.vaz.msuser.domain.User;
@@ -25,8 +26,11 @@ public class UserService {
     return userRepository.getByCpf(cpf);
   }
 
-  public Object getByCpf(String cpfFormatted) {
-    return null;
+  public boolean validator(String cpf) {
+    CPFValidator validator = new CPFValidator();
+    validator.initialize(null);
+    return validator.isValid(cpf, null);
+
   }
 
 }
