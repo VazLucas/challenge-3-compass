@@ -37,7 +37,7 @@ public class PollController {
         .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
-  @GetMapping
+  @GetMapping("/all")
   public ResponseEntity<List<Poll>> listAll() {
     List<Poll> polls = pollService.getAll();
     return ResponseEntity.ok(polls);
