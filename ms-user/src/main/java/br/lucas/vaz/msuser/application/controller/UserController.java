@@ -30,7 +30,7 @@ public class UserController {
   }
 
   @PostMapping("/new")
-  public ResponseEntity saveUser(@RequestBody @Valid User user) throws Exception {
+  public ResponseEntity<User> saveUser(@RequestBody @Valid User user) throws Exception {
 
     if (!formatter.isFormatted(user.getCpf())) {
       try {
