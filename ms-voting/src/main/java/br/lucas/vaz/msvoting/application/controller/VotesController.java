@@ -27,26 +27,14 @@ public class VotesController {
 
   @PostMapping
   public ResponseEntity<Votes> createVote(@RequestBody @Valid Votes votes) {
-    Votes pollCreated = pollService.save(poll);
-    return ResponseEntity.status(HttpStatus.CREATED).body(pollCreated);
+    Votes voteCreated = voteService.save(votes);
+    return ResponseEntity.status(HttpStatus.CREATED).body(voteCreated);
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Votes> getById(@PathVariable("id") Long id) {
-    return pollService.getById(id).map(poll -> ResponseEntity.ok(poll))
-        .orElseGet(() -> ResponseEntity.notFound().build());
-  }
-
-  @GetMapping("/all")
-  public ResponseEntity<List<Votes>> listAll() {
-    List<Votes> polls = pollService.getAll();
-    return ResponseEntity.ok(polls);
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> remove(@PathVariable("id") Long id) {
-    pollService.remove(id);
-    return ResponseEntity.noContent().build();
+  @GetMapping("/listByPoll/{pollId}")
+  public ResponseEntity<List<Votes>> listAll(@RequestParam(required = true) String pollId) {
+    List<Votes> votes = votesService.listByPoll(pollId);
+    return ResponseEntity.ok(votes);
   }
 
 }

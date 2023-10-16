@@ -21,12 +21,12 @@ public class VotesService {
     return voteRepository.save(vote);
   }
 
-  public Optional<Votes> getById(Long id) {
-    return voteRepository.findById(id);
-  }
-
   public List<Votes> getAll() {
     return voteRepository.findAll();
   }
 
+  public List<Votes> listByPoll(String pollId) {
+    Example<Votes> query = QueryBuilder.makeQuery(new Votes(pollId));
+    return voteRepository.findAll(query);
+  }
 }
