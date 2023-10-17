@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.caelum.stella.format.Formatter;
 import br.lucas.vaz.msuser.application.exceptions.InvalidCpf;
+import br.lucas.vaz.msuser.application.exceptions.InvalidCpfFormat;
 import br.lucas.vaz.msuser.application.service.UserService;
 import br.lucas.vaz.msuser.domain.User;
 import jakarta.validation.Valid;
@@ -32,7 +33,7 @@ public class UserController {
         String cpfFormatted = formatter.format(user.getCpf());
         user.setCpf(cpfFormatted);
       } catch (Exception e) {
-        throw new InvalidCpf();
+        throw new InvalidCpfFormat();
       }
     }
     if (!userService.validator(user.getCpf())) {
@@ -48,7 +49,7 @@ public class UserController {
     String cpfFormatted = formatter.format(cpf);
 
     if (!userService.validator(cpfFormatted)) {
-      throw new Exception("Invalid CPF");
+      throw new InvalidCpf();
     }
     return userService.get(cpfFormatted).map(user -> ResponseEntity.ok(user))
         .orElseGet(() -> ResponseEntity.notFound().build());
