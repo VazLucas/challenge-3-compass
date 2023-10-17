@@ -29,6 +29,8 @@ public class Votes implements Serializable {
 
   private Long pollId;
 
+  private String userId;
+
   @Enumerated(EnumType.STRING)
   private SingleVote vote;
 

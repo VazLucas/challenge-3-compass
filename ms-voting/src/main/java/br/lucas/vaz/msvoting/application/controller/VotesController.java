@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.lucas.vaz.msvoting.domain.SingleVoteRequest;
 import br.lucas.vaz.msvoting.domain.Votes;
 import br.lucas.vaz.msvoting.application.service.VotesService;
 import jakarta.validation.Valid;
@@ -25,8 +26,10 @@ public class VotesController {
   private VotesService votesService;
 
   @PostMapping
-  public ResponseEntity<Votes> createVote(@RequestBody @Valid Votes votes) {
-    Votes voteCreated = votesService.save(votes);
+  public ResponseEntity<Votes> createVote(@RequestParam(required = true) String cpf,
+      @RequestParam(required = true) Long pollId,
+      @RequestBody @Valid SingleVoteRequest vote) {
+    Votes voteCreated = votesService.save(cpf, pollId, vote.getVote());
     return ResponseEntity.status(HttpStatus.CREATED).body(voteCreated);
   }
 
