@@ -16,9 +16,9 @@ public class ApiGatewayApplication {
 	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route(r -> r.path("/user/**").uri("lb://ms-user"))
-				// .route(r -> r.path("/improvements/**").uri("lb://ms-improvements"))
-				// .route(r -> r.path("/poll/**").uri("lb://ms-poll"))
+				.route(r -> r.path("/users/**").uri("lb://ms-user"))
+				.route(r -> r.path("/votes/**").uri("lb://ms-voting"))
+				.route(r -> r.path("/polls/**").uri("lb://ms-poll"))
 				.build();
 	}
 
