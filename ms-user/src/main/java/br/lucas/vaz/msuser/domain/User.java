@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "tb_user")
 public class User {
 
   @Id
   @NotEmpty
-  @Column(nullable = false, unique = true, name = "Id")
+  @Column(nullable = false, unique = true, name = "cpf")
   private String cpf;
 
   @NotEmpty
-  @Column(nullable = false)
+  @Column(nullable = false, name = "userName")
   private String name;
 
 }
