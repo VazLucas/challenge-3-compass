@@ -17,17 +17,12 @@ import br.lucas.vaz.msuser.domain.User;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
   @Autowired
   private UserService userService;
   @Autowired
   private Formatter formatter;
-
-  @GetMapping
-  public String status() {
-    return "ok";
-  }
 
   @PostMapping("/new")
   public ResponseEntity<User> saveUser(@RequestBody @Valid User user) throws Exception {
