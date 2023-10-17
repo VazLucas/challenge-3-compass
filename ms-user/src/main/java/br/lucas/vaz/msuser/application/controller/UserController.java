@@ -48,7 +48,7 @@ public class UserController {
     String cpfFormatted = formatter.format(cpf);
 
     if (!userService.validator(cpfFormatted)) {
-      throw new Exception("Invalid CPF");
+      throw new InvalidCpf();
     }
     return userService.get(cpfFormatted).map(user -> ResponseEntity.ok(user))
         .orElseGet(() -> ResponseEntity.notFound().build());
