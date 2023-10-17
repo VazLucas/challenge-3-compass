@@ -3,6 +3,9 @@ package br.lucas.vaz.mspoll.domain;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+
+import java.time.LocalTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,4 +28,7 @@ public class Poll {
   @Column(nullable = false)
   private String name;
 
+  private LocalTime endTime;
+
+  private boolean active;
 }

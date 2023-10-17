@@ -1,8 +1,10 @@
 package br.lucas.vaz.mspoll.application.service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import br.lucas.vaz.mspoll.domain.Poll;
@@ -31,5 +33,17 @@ public class PollService {
 
   public void remove(Long id) {
     pollRepository.deleteById(id);
+  }
+
+  @Scheduled(fixedRate = 60000)
+  public void checkActive() {
+    LocalTime now = LocalTime.now();
+    pollRepository.findAll().forEach(poll -> {
+      if (poll.getEndTime().isBefore(now)) {
+        poll.setActive(false);
+        pollRepository.save(poll);
+      }
+    });
+
   }
 }
