@@ -25,7 +25,7 @@ public class UserController {
   @Autowired
   private Formatter formatter;
 
-  @PostMapping("/new")
+  @PostMapping()
   public ResponseEntity<User> saveUser(@RequestBody @Valid User user) throws Exception {
 
     if (!formatter.isFormatted(user.getCpf())) {
