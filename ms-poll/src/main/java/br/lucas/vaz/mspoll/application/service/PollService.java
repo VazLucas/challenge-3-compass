@@ -34,6 +34,16 @@ public class PollService {
     return pollRepository.save(poll);
   }
 
+  @Transactional
+  public Poll updateActivePoll(Long id) {
+    Optional<Poll> poll = pollRepository.findById(id);
+    Poll pollActivated = poll.get();
+    LocalTime time = LocalTime.now();
+    pollActivated.setEndTime(time.plusMinutes(pollActivated.getMinutesActive()));
+    pollActivated.setActive(true);
+    return pollRepository.save(pollActivated);
+  }
+
   public Optional<Poll> getById(Long id) {
     return pollRepository.findById(id);
   }
