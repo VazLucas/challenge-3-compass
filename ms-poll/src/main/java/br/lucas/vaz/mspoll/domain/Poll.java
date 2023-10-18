@@ -20,6 +20,9 @@ import lombok.NoArgsConstructor;
 
 public class Poll {
 
+  public Poll(LocalTime localTime) {
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
@@ -28,7 +31,13 @@ public class Poll {
   @Column(nullable = false)
   private String name;
 
+  private Integer minutesActive;
+
   private LocalTime endTime;
 
-  private boolean active;
+  private LocalTime createdTime;
+
+  private Boolean active;
+  private Boolean voted;
+
 }
