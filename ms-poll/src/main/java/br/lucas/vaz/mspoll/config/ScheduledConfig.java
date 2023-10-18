@@ -4,10 +4,12 @@ import java.time.LocalTime;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import br.lucas.vaz.mspoll.infra.repository.PollRepository;
 
 @EnableScheduling
+@Component
 public class ScheduledConfig {
 
   private final PollRepository pollRepository;
