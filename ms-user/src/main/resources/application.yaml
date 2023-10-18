@@ -2,7 +2,7 @@ spring:
   application:
     name: ms-user
   datasource:
-    url: jdbc:h2:file:./ms-user/challenge
+    url: jdbc:h2:file:./challenge;AUTO_SERVER=TRUE;
     username: test
     password: test
     driverClassName: org.h2.Driver
