@@ -1,5 +1,6 @@
 package br.lucas.vaz.mspoll.application.controller;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +63,13 @@ public class PollController {
     pollService.updateActivePoll(pollAsActive.getId());
     return ResponseEntity.ok(pollAsActive);
 
+  }
+
+  @GetMapping("/voted")
+  public ResponseEntity<List<Poll>> listAllVoted(LocalTime time) {
+    time = LocalTime.now();
+    List<Poll> votedPolls = pollService.getAllVoted(time);
+    return ResponseEntity.ok(votedPolls);
   }
 
   @GetMapping("/all")
