@@ -1,13 +1,16 @@
 package br.lucas.vaz.mspoll.application.service;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import br.lucas.vaz.mspoll.domain.Poll;
+import br.lucas.vaz.mspoll.domain.QueryBuilder;
 import br.lucas.vaz.mspoll.infra.repository.PollRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +21,30 @@ public class PollService {
 
   private final PollRepository pollRepository;
 
+  @Value("${poll.default.time}")
+  private Integer defaultTime;
+
   @Transactional
   public Poll save(Poll poll) {
+    if (poll.getMinutesActive() <= 0) {
+      poll.setMinutesActive(defaultTime);
+    }
+    LocalTime time = LocalTime.now();
+    poll.setCreatedTime(time);
+    poll.setEndTime(time);
+    poll.setActive(false);
+    poll.setVoted(false);
     return pollRepository.save(poll);
+  }
+
+  @Transactional
+  public Poll updateActivePoll(Long id) {
+    Optional<Poll> poll = pollRepository.findById(id);
+    Poll pollActivated = poll.get();
+    LocalTime time = LocalTime.now();
+    pollActivated.setEndTime(time.plusMinutes(pollActivated.getMinutesActive()));
+    pollActivated.setActive(true);
+    return pollRepository.save(pollActivated);
   }
 
   public Optional<Poll> getById(Long id) {
@@ -35,15 +59,14 @@ public class PollService {
     pollRepository.deleteById(id);
   }
 
-  @Scheduled(fixedRate = 60000)
-  public void checkActive() {
-    LocalTime now = LocalTime.now();
-    pollRepository.findAll().forEach(poll -> {
-      if (poll.getEndTime().isBefore(now)) {
-        poll.setActive(false);
-        pollRepository.save(poll);
+  public List<Poll> getAllVoted(LocalTime time) {
+    Example<Poll> query = QueryBuilder.makeQuery(new Poll(time));
+    List<Poll> query1 = new ArrayList<>();
+    pollRepository.findAll(query).forEach(poll -> {
+      if (!poll.getEndTime().isBefore(time)) {
+        query1.add(poll);
       }
     });
-
+    return query1;
   }
 }
