@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.lucas.vaz.mspoll.domain.Poll;
@@ -18,8 +18,19 @@ public class PollService {
 
   private final PollRepository pollRepository;
 
+  @Value("${poll.default.time}")
+  private Integer defaultTime;
+
   @Transactional
   public Poll save(Poll poll) {
+    if (poll.getMinutesActive() <= 0) {
+      poll.setMinutesActive(defaultTime);
+    }
+    LocalTime time = LocalTime.now();
+    poll.setCreatedTime(time);
+    poll.setEndTime(time);
+    poll.setActive(false);
+    poll.setVoted(false);
     return pollRepository.save(poll);
   }
 
@@ -35,15 +46,4 @@ public class PollService {
     pollRepository.deleteById(id);
   }
 
-  @Scheduled(fixedRate = 60000)
-  public void checkActive() {
-    LocalTime now = LocalTime.now();
-    pollRepository.findAll().forEach(poll -> {
-      if (poll.getEndTime().isBefore(now)) {
-        poll.setActive(false);
-        pollRepository.save(poll);
-      }
-    });
-
-  }
 }
