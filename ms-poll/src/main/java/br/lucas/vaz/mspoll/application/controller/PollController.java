@@ -64,6 +64,19 @@ public class PollController {
 
   }
 
+  @GetMapping("/active/{id}")
+  public ResponseEntity<Optional<Poll>> getIfActive(@PathVariable("id") Long id) {
+    Optional<Poll> poll = pollService.getById(id);
+    Poll pollActive = new Poll();
+    if (!poll.isEmpty()) {
+      pollActive = poll.get();
+    }
+    if (!pollActive.getActive()) {
+      return ResponseEntity.notFound().header("Error", "Poll not active for id " + id).build();
+    }
+    return ResponseEntity.ok(poll);
+  }
+
   @GetMapping("/voted")
   public ResponseEntity<List<Poll>> listAllVoted(boolean voted) {
     List<Poll> votedPolls = pollService.getAllVoted(true);
