@@ -33,7 +33,7 @@ public class VotesController {
     return ResponseEntity.status(HttpStatus.CREATED).body(voteCreated);
   }
 
-  @GetMapping("/listByPoll/")
+  @GetMapping("/listByPoll")
   public ResponseEntity<List<Votes>> listAll(@RequestParam(required = true) Long pollId) {
     List<Votes> votes = votesService.listByPoll(pollId);
     return ResponseEntity.ok(votes);
