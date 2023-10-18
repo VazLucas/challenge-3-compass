@@ -1,6 +1,7 @@
 package br.lucas.vaz.mspoll.application.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -35,6 +37,31 @@ public class PollController {
   public ResponseEntity<Poll> getById(@PathVariable("id") Long id) {
     return pollService.getById(id).map(poll -> ResponseEntity.ok(poll))
         .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Poll> setAsActive(@PathVariable("id") Long id) {
+    Optional<Poll> optionalPoll = pollService.getById(id);
+
+    if (!optionalPoll.isPresent()) {
+      return ResponseEntity.notFound().header("Error", "Poll not found for id " + id).build();
+    }
+
+    Poll pollAsActive = optionalPoll.get();
+
+    if (pollAsActive.getVoted()) {
+      return ResponseEntity.badRequest()
+          .header("Error", "The poll | " + pollAsActive.getName() + " | is closed and has already been voted")
+          .build();
+    }
+    if (pollAsActive.getActive()) {
+      return ResponseEntity.noContent()
+          .header("Error", "The poll is already active").build();
+    }
+
+    pollService.updateActivePoll(pollAsActive.getId());
+    return ResponseEntity.ok(pollAsActive);
+
   }
 
   @GetMapping("/all")
