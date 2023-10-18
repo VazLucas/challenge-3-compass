@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 
 public class Poll {
 
-  public Poll(LocalTime localTime) {
+  public Poll(boolean voted2) {
   }
 
   @Id
