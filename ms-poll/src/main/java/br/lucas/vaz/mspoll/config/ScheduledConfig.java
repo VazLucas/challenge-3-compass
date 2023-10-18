@@ -1,4 +1,4 @@
-package br.lucas.vaz.mspoll.application.config;
+package br.lucas.vaz.mspoll.config;
 
 import java.time.LocalTime;
 

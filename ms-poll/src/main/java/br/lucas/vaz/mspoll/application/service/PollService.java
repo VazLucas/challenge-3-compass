@@ -59,11 +59,11 @@ public class PollService {
     pollRepository.deleteById(id);
   }
 
-  public List<Poll> getAllVoted(LocalTime time) {
-    Example<Poll> query = QueryBuilder.makeQuery(new Poll(time));
+  public List<Poll> getAllVoted(boolean voted) {
+    Example<Poll> query = QueryBuilder.makeQuery(new Poll(voted));
     List<Poll> query1 = new ArrayList<>();
     pollRepository.findAll(query).forEach(poll -> {
-      if (!poll.getEndTime().isBefore(time)) {
+      if (poll.getVoted()) {
         query1.add(poll);
       }
     });

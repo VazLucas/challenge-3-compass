@@ -1,6 +1,5 @@
 package br.lucas.vaz.mspoll.application.controller;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +36,7 @@ public class PollController {
   @GetMapping("/{id}")
   public ResponseEntity<Poll> getById(@PathVariable("id") Long id) {
     return pollService.getById(id).map(poll -> ResponseEntity.ok(poll))
-        .orElseGet(() -> ResponseEntity.notFound().build());
+        .orElseGet(() -> ResponseEntity.notFound().header("Error", "Poll not found for id " + id).build());
   }
 
   @PutMapping("/{id}")
@@ -66,9 +65,8 @@ public class PollController {
   }
 
   @GetMapping("/voted")
-  public ResponseEntity<List<Poll>> listAllVoted(LocalTime time) {
-    time = LocalTime.now();
-    List<Poll> votedPolls = pollService.getAllVoted(time);
+  public ResponseEntity<List<Poll>> listAllVoted(boolean voted) {
+    List<Poll> votedPolls = pollService.getAllVoted(true);
     return ResponseEntity.ok(votedPolls);
   }
 
