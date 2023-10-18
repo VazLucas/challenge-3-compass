@@ -27,7 +27,8 @@ public class VotesService {
   @Transactional
   public Votes save(String cpf, Long pollId, SingleVote singleVote) {
     User user = userControllerClient.getByCpf(cpf);
-    Poll poll = pollControllerClient.getById(pollId);
+    Poll poll = pollControllerClient.getIfActive(pollId);
+
     Votes vote = new Votes();
     vote.setPollId(poll.getId());
     vote.setUserId(user.getCpf());
