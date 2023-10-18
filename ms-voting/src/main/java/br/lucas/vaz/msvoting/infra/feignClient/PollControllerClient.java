@@ -10,4 +10,7 @@ import br.lucas.vaz.msvoting.domain.Poll;
 public interface PollControllerClient {
   @GetMapping("/{id}")
   Poll getById(@PathVariable("id") Long id);
+
+  @GetMapping("/active/{id}")
+  Poll getIfActive(@PathVariable("id") Long id);
 }
