@@ -52,7 +52,11 @@ public class PollService {
   }
 
   public List<Poll> getAll() {
-    return pollRepository.findAll();
+    List<Poll> allPolls = pollRepository.findAll();
+    if (allPolls.isEmpty()) {
+      throw new RuntimeException("No polls");
+    }
+    return allPolls;
   }
 
   public void remove(Long id) {
@@ -61,12 +65,15 @@ public class PollService {
 
   public List<Poll> getAllVoted(boolean voted) {
     Example<Poll> query = QueryBuilder.makeQuery(new Poll(voted));
-    List<Poll> query1 = new ArrayList<>();
+    List<Poll> allVotedList = new ArrayList<>();
     pollRepository.findAll(query).forEach(poll -> {
       if (poll.getVoted()) {
-        query1.add(poll);
+        allVotedList.add(poll);
       }
     });
-    return query1;
+    if (allVotedList.isEmpty()) {
+      throw new RuntimeException("No voted polls");
+    }
+    return allVotedList;
   }
 }
