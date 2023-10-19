@@ -61,6 +61,10 @@ public class VotesService {
 
   public List<Votes> listByPoll(Long pollId) {
     Example<Votes> query = QueryBuilder.makeQuery(new Votes(pollId));
-    return voteRepository.findAll(query);
+    List<Votes> listByPoll = voteRepository.findAll(query);
+    if (listByPoll.isEmpty()) {
+      throw new RuntimeException("No votes for this poll " + pollId);
+    }
+    return listByPoll;
   }
 }
