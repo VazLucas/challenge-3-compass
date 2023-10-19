@@ -13,6 +13,7 @@ import br.lucas.vaz.msvoting.domain.Votes;
 import br.lucas.vaz.msvoting.infra.feignClient.PollControllerClient;
 import br.lucas.vaz.msvoting.infra.feignClient.UserControllerClient;
 import br.lucas.vaz.msvoting.infra.repository.VotesRepository;
+import feign.FeignException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -26,13 +27,31 @@ public class VotesService {
 
   @Transactional
   public Votes save(String cpf, Long pollId, SingleVote singleVote) {
-    User user = userControllerClient.getByCpf(cpf);
-    Poll poll = pollControllerClient.getIfActive(pollId);
+    if (singleVote == null) {
+      throw new RuntimeException("Vote cannot be null, specify YES or NO");
+    }
+    User user;
+    try {
+      user = userControllerClient.getByCpf(cpf);
+    } catch (FeignException.NotFound e) {
+      throw new RuntimeException("User not found");
+    }
+    Poll poll;
+    try {
+      poll = pollControllerClient.getIfActive(pollId);
+    } catch (FeignException.NotFound e) {
+      throw new RuntimeException("Poll not found");
+    }
 
     Votes vote = new Votes();
     vote.setPollId(poll.getId());
     vote.setUserId(user.getCpf());
     vote.setVote(singleVote);
+
+    if (voteRepository.findByUserIdAndPollId(user.getCpf(), poll.getId()).isPresent()) {
+      throw new RuntimeException("User already voted for this poll");
+    }
+
     return voteRepository.save(vote);
   }
 
