@@ -20,9 +20,6 @@ import lombok.NoArgsConstructor;
 
 public class Poll {
 
-  public Poll(boolean voted2) {
-  }
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
@@ -39,5 +36,10 @@ public class Poll {
 
   private Boolean active;
   private Boolean voted;
+
+  private Integer result;
+
+  public Poll(boolean voted) {
+  }
 
 }
