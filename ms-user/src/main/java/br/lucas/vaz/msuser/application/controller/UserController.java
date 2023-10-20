@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.caelum.stella.format.Formatter;
-import br.lucas.vaz.msuser.application.exceptions.InvalidCpf;
-import br.lucas.vaz.msuser.application.exceptions.InvalidCpfFormat;
 import br.lucas.vaz.msuser.application.service.UserService;
 import br.lucas.vaz.msuser.domain.User;
 import jakarta.validation.Valid;
