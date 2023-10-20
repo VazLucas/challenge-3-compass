@@ -22,36 +22,17 @@ import jakarta.validation.Valid;
 public class UserController {
   @Autowired
   private UserService userService;
-  @Autowired
-  private Formatter formatter;
 
   @PostMapping()
   public ResponseEntity<User> saveUser(@RequestBody @Valid User user) throws Exception {
-
-    if (!formatter.isFormatted(user.getCpf())) {
-      try {
-        String cpfFormatted = formatter.format(user.getCpf());
-        user.setCpf(cpfFormatted);
-      } catch (Exception e) {
-        throw new InvalidCpfFormat();
-      }
-    }
-    if (!userService.validator(user.getCpf())) {
-      throw new InvalidCpf();
-
-    }
     User userCreated = userService.save(user);
     return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
   }
 
   @GetMapping("/{cpf}")
   public ResponseEntity<User> getByCpf(@PathVariable("cpf") String cpf) throws Exception {
-    String cpfFormatted = formatter.format(cpf);
 
-    if (!userService.validator(cpfFormatted)) {
-      throw new InvalidCpf();
-    }
-    return userService.get(cpfFormatted).map(user -> ResponseEntity.ok(user))
+    return userService.get(cpf).map(user -> ResponseEntity.ok(user))
         .orElseGet(() -> ResponseEntity.notFound().build());
   }
 }
