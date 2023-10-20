@@ -1,0 +1,120 @@
+{
+    "info": {
+        "_postman_id": "b10037d8-5aea-4cfe-a906-2f23cc11516b",
+        "name": "Polls",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Get poll by id",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/polls/",
+                    "path": [
+                        "polls",
+                        ""
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        },
+        {
+            "name": "Post new poll",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/polls",
+                    "path": [
+                        "polls"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"improvement namme\",\n  \"minutesActive\": \n}"
+                }
+            }
+        },
+        {
+            "name": "Put poll as active",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "localhost:8080/polls/",
+                    "path": [
+                        "polls",
+                        ""
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        },
+        {
+            "name": "Get all polls",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/polls/all",
+                    "path": [
+                        "polls",
+                        "all"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        },
+        {
+            "name": "Get polls voted",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/polls/voted",
+                    "path": [
+                        "polls",
+                        "voted"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        },
+        {
+            "name": "Delete poll by id",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "localhost:8080/polls/",
+                    "path": [
+                        "polls",
+                        ""
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        }
+    ]
+}
