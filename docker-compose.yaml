@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  rabbitMQ:
+    image: rabbitmq:3.12-management
+    container_name: rabbitMQ
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    networks:
+      - challenge
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  ms-eureka-server:
+    build: ./ms-eureka-server
+    ports:
+      - 8761:8761
+    container_name: ms-eureka-server
+    networks:
+      - challenge
+
+  ms-user:
+    depends_on:
+      - rabbitMQ
+      - ms-eureka-server
+    build: ./ms-user
+    container_name: ms-user
+    networks:
+      - challenge
+
+  ms-poll:
+    depends_on:
+      - rabbitMQ
+      - ms-eureka-server
+    build: ./ms-poll
+    container_name: ms-poll
+    networks:
+      - challenge
+
+  ms-voting:
+    depends_on:
+      - rabbitMQ
+      - ms-eureka-server
+    build: ./ms-voting
+    container_name: ms-voting
+    networks:
+      - challenge
+
+  api-gateway:
+    depends_on:
+      - ms-eureka-server
+    build: ./api-gateway
+    ports:
+      - 8080:8080
+    container_name: api-gateway
+    networks:
+      - challenge
+
+networks:
+  challenge:
+    driver: bridge
