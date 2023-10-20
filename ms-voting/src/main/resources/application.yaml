@@ -2,10 +2,15 @@ spring:
   application:
     name: ms-voting
   datasource:
-    url: jdbc:h2:file:./challenge;AUTO_SERVER=TRUE;
+    url: jdbc:h2:file:./challenge;
     username: test
     password: test
     driverClassName: org.h2.Driver
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -25,3 +30,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+
+rabbitmq:
+  queue:
+    result-publisher: result-publisher
+    result-publisher-string: result-publisher-string
