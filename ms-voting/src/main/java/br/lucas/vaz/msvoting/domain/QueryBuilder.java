@@ -11,4 +11,9 @@ public class QueryBuilder {
     ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll().withIgnoreCase().withIgnoreNullValues();
     return Example.of(vote, exampleMatcher);
   }
+
+  public static Example<Votes> queryTotalVotes(Votes vote) {
+    ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll().withIgnoreCase().withIgnoreNullValues();
+    return Example.of(vote, exampleMatcher);
+  }
 }
