@@ -54,7 +54,7 @@ public class UserService {
     if (!validator(cpfFormatted)) {
       throw new InvalidCpf();
     }
-    return userRepository.getByCpf(cpf);
+    return userRepository.getByCpf(cpfFormatted);
   }
 
   public boolean validator(String cpf) {
