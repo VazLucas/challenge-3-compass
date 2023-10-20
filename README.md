@@ -16,16 +16,16 @@
 
 | Microservice    | Name               | Http method | Link                                          | Body / Query                                                   |
 | --------------- | ------------------ | ----------- | --------------------------------------------- | -------------------------------------------------------------- |
-| user-controller | postNewUser        | POST        | [Go](http://localhost:8080/users)             | { "cpf": "valid cpf", "name": "your name"} as json body        |
-| user-controller | getUsers           | GET         | [Go](http://localhost:8080/users/{id})        | userId (String cpf) as path variable                           |
-| poll-controller | getPollVoted       | GET         | [Go](localhost:8080/polls/voted)              | -                                                              |
-| poll-controller | deletPollById      | DELETE      | [Go](localhost:8080/polls/{pollId})           | pollId (integer) as path variable                              |
-| poll-controller | updatePollAsActive | PUT         | [Go](localhost:8080/polls/{pollId})           | pollId (integer) as path variable}                             |
-| poll-controller | postNewPoll        | POST        | [Go](localhost:8080/polls)                    | { "name": "improvement namme", "minutesActive": } as Json body |
-| poll-controller | getPollById        | GET         | [Go](localhost:8080/polls/{id})               | pollId (integer) as path variable}                             |
-| poll-controller | getAllPolls        | GET         | [Go](localhost:8080/polls/all)                | -                                                              |
-| vote-controller | getVoteByPoll      | GET         | [Go](localhost:8080/votes/listByPoll?pollId=) | {"pollId" : "pollId"} as query params}                         |
-| vote-controller | postNewVote        | POST        | [Go](localhost:8080/votes?cpf=&pollId=)       | { "cpf": "cpf", "pollId": "pollId"} as query params            |
+| user-controller | postNewUser        | POST        | http://localhost:8080/users                   | { "cpf": "valid cpf", "name": "your name"} as json body        |
+| user-controller | getUsers           | GET         | http://localhost:8080/users/{id}              | userId (String cpf) as path variable                           |
+| poll-controller | getPollVoted       | GET         | http://localhost:8080/polls/voted             | -                                                              |
+| poll-controller | deletPollById      | DELETE      | http://localhost:8080/polls/{pollId}          | pollId (integer) as path variable                              |
+| poll-controller | updatePollAsActive | PUT         | http://localhost:8080/polls/{pollId}          | pollId (integer) as path variable}                             |
+| poll-controller | postNewPoll        | POST        | http://localhost:8080/polls                   | { "name": "improvement namme", "minutesActive": } as Json body |
+| poll-controller | getPollById        | GET         | http://localhost:8080/polls/{id}              | pollId (integer) as path variable}                             |
+| poll-controller | getAllPolls        | GET         | http://localhost:8080/polls/all               | -                                                              |
+| vote-controller | getVoteByPoll      | GET         | http://localhost:8080/votes/listByPoll?pollId=| {"pollId" : "pollId"} as query params}                         |
+| vote-controller | postNewVote        | POST        | http://localhost:8080/votes?cpf=&pollId=      | { "cpf": "cpf", "pollId": "pollId"} as query params            |
 
 ---
 
