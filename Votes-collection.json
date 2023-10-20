@@ -1,0 +1,70 @@
+{
+    "info": {
+        "_postman_id": "f49b9715-4a7a-4286-99e7-bf328997ac1d",
+        "name": "Votes",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Post new vote",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/votes?cpf=&pollId=",
+                    "query": [
+                        {
+                            "key": "cpf",
+                            "value": ""
+                        },
+                        {
+                            "key": "pollId",
+                            "value": ""
+                        }
+                    ],
+                    "variable": [],
+                    "path": [
+                        "votes"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"vote\": \"YES or NO\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Get vote by poll",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/votes/listByPoll?pollId=1",
+                    "query": [
+                        {
+                            "key": "pollId",
+                            "value": ""
+                        }
+                    ],
+                    "variable": [],
+                    "path": [
+                        "votes",
+                        "listByPoll"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        }
+    ]
+}
